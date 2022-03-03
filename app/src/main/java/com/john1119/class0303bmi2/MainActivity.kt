@@ -2,6 +2,7 @@ package com.john1119.class0303bmi2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.john1119.class0303bmi2.databinding.ActivityMainBinding //幫忙import出來的
 
@@ -17,5 +18,8 @@ class MainActivity : AppCompatActivity() {
         println("hahaha")
         var weight=binding.edWeight.text.toString().toFloat()
         var height=binding.edHeight.text.toString().toFloat()
+//        println("bmi is ${weight/(height*height)}")
+        var bmi = weight/(height*height)
+        Log.d("BMI",bmi.toString())
     }
 }
