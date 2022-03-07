@@ -69,4 +69,14 @@
         android:text="Help"
         app:layout_constraintStart_toStartOf="@+id/b_calculate"
         app:layout_constraintTop_toBottomOf="@+id/b_calculate" />
+
+    <TextView
+        android:id="@+id/tv_bmi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="@+id/b_calculate"
+        app:layout_constraintStart_toEndOf="@+id/b_calculate"
+        app:layout_constraintTop_toTopOf="@+id/b_calculate" />
 </androidx.constraintlayout.widget.ConstraintLayout>
