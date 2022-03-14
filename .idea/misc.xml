@@ -5,7 +5,8 @@
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_result.xml" value="0.17753623188405798" />
-        <entry key="app/src/main/res/layout/row_transaction.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_transaction.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/row_transaction.xml" value="0.25" />
       </map>
     </option>
   </component>

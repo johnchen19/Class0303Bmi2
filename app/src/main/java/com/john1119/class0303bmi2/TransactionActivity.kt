@@ -2,16 +2,23 @@ package com.john1119.class0303bmi2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.john1119.class0303bmi2.databinding.ActivityTransactionBinding
+import com.john1119.class0303bmi2.databinding.RowTransactionBinding
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URL
 import kotlin.concurrent.thread
 
 class TransactionActivity : AppCompatActivity() {
+    lateinit var binding: ActivityTransactionBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_transaction)
+        binding = ActivityTransactionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         thread {
             val json = URL("https://atm201605.appspot.com/h").readText()
 
@@ -33,6 +40,18 @@ class TransactionActivity : AppCompatActivity() {
                 println(it)
             }
         }
+
+        binding.recycler.hasFixedSize()
+        binding.recycler.layoutManager = LinearLayoutManager(this)
+//        binding.recycler.adapter =
+        
+    }
+
+    inner class TranViewHolder(val binding: RowTransactionBinding) : RecyclerView.ViewHolder(binding.root) {
+        val account = binding.tranAccount
+        val amount = binding.tranAmount
+        val date = binding.tranDate
+        val type = binding.tranType
     }
 }
 
