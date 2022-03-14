@@ -2,6 +2,7 @@ package com.john1119.class0303bmi2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -18,6 +19,11 @@ class TransactionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTransactionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        binding.recycler.hasFixedSize()
+        binding.recycler.layoutManager = LinearLayoutManager(this)
+
 
         thread {
             val json = URL("https://atm201605.appspot.com/h").readText()
@@ -39,15 +45,39 @@ class TransactionActivity : AppCompatActivity() {
             transactions.forEach {
                 println(it)
             }
+            runOnUiThread {//only main thread can contral ui
+                binding.recycler.adapter = object : RecyclerView.Adapter<TranViewHolder>() {
+                    override fun onCreateViewHolder(//因為要存取transactions變數所以寫在thread裏面的匿名類別比較方便
+                        parent: ViewGroup,
+                        viewType: Int
+                    ): TranViewHolder {
+                        val binding = RowTransactionBinding.inflate(layoutInflater, parent, false)
+                        return TranViewHolder(binding)
+                    }
+
+                    override fun onBindViewHolder(holder: TranViewHolder, position: Int) {
+                        val tran = transactions[position]
+//                        val tran = transactions.get(position)
+                        holder.account.setText(tran.account.toString())
+                        holder.amount.setText(tran.amount.toString())
+                        holder.date.setText(tran.date.toString())
+                        holder.type.setText(tran.type.toString())
+
+                    }
+
+                    override fun getItemCount(): Int {
+                        return transactions.size
+                    }
+
+                }
+            }
         }
 
-        binding.recycler.hasFixedSize()
-        binding.recycler.layoutManager = LinearLayoutManager(this)
-//        binding.recycler.adapter =
-        
+
     }
 
-    inner class TranViewHolder(val binding: RowTransactionBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class TranViewHolder(val binding: RowTransactionBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val account = binding.tranAccount
         val amount = binding.tranAmount
         val date = binding.tranDate
