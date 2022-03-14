@@ -47,6 +47,7 @@ class TransactionActivity : AppCompatActivity() {
             }
             runOnUiThread {//only main thread can contral ui
                 binding.recycler.adapter = object : RecyclerView.Adapter<TranViewHolder>() {
+                    //需回傳TranViewHolder，裡面塞打好氣的view
                     override fun onCreateViewHolder(//因為要存取transactions變數所以寫在thread裏面的匿名類別比較方便
                         parent: ViewGroup,
                         viewType: Int
@@ -54,7 +55,7 @@ class TransactionActivity : AppCompatActivity() {
                         val binding = RowTransactionBinding.inflate(layoutInflater, parent, false)
                         return TranViewHolder(binding)
                     }
-
+                    //指定顯示的值，position會自動幫忙做類似for in，把值塞入每一列
                     override fun onBindViewHolder(holder: TranViewHolder, position: Int) {
                         val tran = transactions[position]
 //                        val tran = transactions.get(position)
@@ -64,7 +65,7 @@ class TransactionActivity : AppCompatActivity() {
                         holder.type.setText(tran.type.toString())
 
                     }
-
+                    //給資料總數
                     override fun getItemCount(): Int {
                         return transactions.size
                     }
@@ -75,7 +76,7 @@ class TransactionActivity : AppCompatActivity() {
 
 
     }
-
+    //adapter的createViewHolder會要viewholder所以要先寫
     inner class TranViewHolder(val binding: RowTransactionBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val account = binding.tranAccount
@@ -85,7 +86,7 @@ class TransactionActivity : AppCompatActivity() {
     }
 }
 
-
+//處理JSON時需用到類別，但可以用plugin會比較快
 data class Transaction(val account: String, val date: String, val amount: Int, val type: Int) {
 
 }
